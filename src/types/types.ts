@@ -7,4 +7,5 @@ export type TBeer = {
         reviews: number;
     };
     image: string;
+    quantity?: number;
 };

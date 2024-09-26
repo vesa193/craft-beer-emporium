@@ -1,0 +1,42 @@
+.dialog-backdrop {
+    position: fixed;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    right: 0;
+    bottom: 0;
+    background: #e4e4e4;
+    width: clamp(min(10vw, 20rem), 300px, max(90vw, 55rem));
+    height: max-content;
+    z-index: 2;
+    transform: translate(-50%, -50%);
+    padding: 2rem;
+    border-radius: 8px;
+    color: #212121;
+
+    & .dialog-header {
+        display: grid;
+        grid-template-columns: 30% 1fr;
+        gap: 2rem;
+
+        & img {
+            width: 60px;
+            object-fit: contain;
+        }
+    }
+
+    & .dialog-footer {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+}
