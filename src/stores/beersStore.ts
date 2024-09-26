@@ -1,15 +1,5 @@
 import { create } from 'zustand';
-
-type TBeer = {
-    id: number;
-    price: string;
-    name: string;
-    rating: {
-        average: number;
-        reviews: number;
-    };
-    image: string;
-};
+import { TBeer } from '../types/types';
 
 type TBeerState = {
     beersList: TBeer[];

@@ -1,5 +1,8 @@
 import React, { useEffect } from 'react';
 import { useBeerStore } from '../stores/beersStore';
+import CardItem from '../components/CardItem';
+
+import '../components/Layout.css';
 
 const Home = () => {
     const { fetchBeersList, beersList, isLoading, error } = useBeerStore(
@@ -19,21 +22,11 @@ const Home = () => {
     }
 
     return (
-        <>
-            <h1>Home page</h1>
-            <br />
-            <br />
-            <ul>
-                {beersList?.map(({ id, name, image }) => {
-                    return (
-                        <li key={id}>
-                            {name}
-                            {image && <img src={image} alt={name} />}
-                        </li>
-                    );
-                })}
-            </ul>
-        </>
+        <div className="layout">
+            {beersList?.map((beerProps) => {
+                return <CardItem key={beerProps.id} {...beerProps} />;
+            })}
+        </div>
     );
 };
 
