@@ -1,0 +1,17 @@
+header {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    align-items: center;
+    padding-inline: 1rem;
+
+    & nav {
+        display: flex;
+        justify-content: flex-end;
+
+        & ul {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+    }
+}
