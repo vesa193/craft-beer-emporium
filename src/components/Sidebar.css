@@ -10,8 +10,10 @@
 
 .sidebar {
     position: fixed;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
     width: 300px;
-    height: 100vh;
+    height: calc(100vh - 1rem);
     top: 0;
     right: 0;
     z-index: 2;
@@ -28,5 +30,14 @@
             font-size: 2rem;
             cursor: pointer;
         }
+    }
+
+    & .sidebar-items {
+        overflow-y: auto;
+    }
+
+    & .sidebar-total {
+        display: flex;
+        justify-content: space-between;
     }
 }
