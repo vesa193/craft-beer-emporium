@@ -12,9 +12,10 @@ type TBeerState = {
     error: string;
     fetchBeersList: () => void;
     updateSoldBeers: (newBeer: TBeer) => void;
+    filterBeersListbyQueryKey: (keyword: string) => void;
 };
 
-export const useBeerStore = create<TBeerState>((set) => ({
+export const useBeerStore = create<TBeerState>((set, get) => ({
     beersList: [],
     soldBeersList: [],
     isLoading: false,
@@ -77,5 +78,23 @@ export const useBeerStore = create<TBeerState>((set) => ({
                 soldBeersList: [...state.soldBeersList],
             };
         });
+    },
+    filterBeersListbyQueryKey: (queryKey: string) => {
+        if (!queryKey || queryKey === 'keyword' || queryKey === 'style') {
+            get().fetchBeersList();
+            return;
+        }
+
+        set(() => ({
+            isLoading: true,
+        }));
+        setTimeout(() => {
+            set((state) => ({
+                beersList: state.beersList.filter(({ name }) =>
+                    name.toLowerCase().includes(queryKey.toLowerCase())
+                ),
+                isLoading: false,
+            }));
+        }, 1000);
     },
 }));

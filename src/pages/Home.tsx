@@ -19,7 +19,6 @@ const Home = () => {
     const { isOpen, onOpen } = useDialogStore((state) => state);
 
     const lastSoldBeer = soldBeersList[soldBeersList?.length - 1];
-    console.log('soldBeersList', soldBeersList);
     const onBuyHandler = (beerId: number) => {
         const soldBeer = beersList.find((beer) => beer.id === beerId);
 
@@ -28,6 +27,8 @@ const Home = () => {
             onOpen();
         }
     };
+
+    console.log('beersList', beersList);
 
     useEffect(() => {
         fetchBeersList();
