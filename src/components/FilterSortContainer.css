@@ -1,0 +1,28 @@
+.filter-sort-container {
+    background-color: aliceblue;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 2rem 1rem 0;
+    color: #212121;
+
+    & h3 {
+        margin-top: 0;
+    }
+}
+
+.filter-sort-container-inputs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    align-items: flex-end;
+    gap: 1rem;
+}
+
+.filter-button {
+    height: max-content;
+    background-color: #646cff;
+
+    &:disabled {
+        background-color: #d3d3d3;
+        color: gray;
+    }
+}

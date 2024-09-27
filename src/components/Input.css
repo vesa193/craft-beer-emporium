@@ -1,0 +1,23 @@
+.input,
+.select {
+    display: flex;
+    flex-direction: column;
+
+    & label {
+        margin-bottom: 1rem;
+    }
+
+    & .input-field,
+    .select-field {
+        max-width: 280px;
+        border-radius: 7px;
+        padding: 10px;
+        background-color: white;
+        color: #212121;
+        border: 0;
+
+        &:focus {
+            outline: none;
+        }
+    }
+}

@@ -5,6 +5,7 @@ import CardItem from '../components/CardItem';
 import '../components/Layout.css';
 import { useDialogStore } from '../stores/dialogStore';
 import Dialog from '../components/Dialog';
+import FilterSortContainer from '../components/FilterSortContainer';
 
 const Home = () => {
     const {
@@ -58,6 +59,7 @@ const Home = () => {
                     }
                 />
             )}
+            <FilterSortContainer />
             <div className="layout">
                 {beersList?.map((beerProps) => {
                     return (
