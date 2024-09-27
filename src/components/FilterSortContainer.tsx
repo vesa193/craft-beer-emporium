@@ -7,15 +7,30 @@ import { useBeerStore } from '../stores/beersStore';
 
 const FilterSortContainer = () => {
     const [searchParams, setSearchParams] = useSearchParams();
-    const { filterBeersListbyQueryKey } = useBeerStore((state) => state);
+    console.log('searchParams', searchParams.toString());
+    const { filterBeersListbyQueryKey, sortBeersListbyQueryKey } = useBeerStore(
+        (state) => state
+    );
 
-    const onSubmitHander = (
-        e: ChangeEvent<HTMLFormElement>,
-        queryKey: string
-    ) => {
+    const onSubmitHander = (e: ChangeEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (!queryKey) return;
-        filterBeersListbyQueryKey(queryKey);
+
+        const criteria = searchParams.get('criteria');
+        const queryKey =
+            searchParams.get('keyword') || searchParams.get('style');
+
+        if (queryKey) {
+            filterBeersListbyQueryKey(queryKey);
+        }
+
+        if (
+            criteria === 'a-z' ||
+            criteria === 'z-a' ||
+            criteria === 'high-low' ||
+            criteria === 'low-high'
+        ) {
+            sortBeersListbyQueryKey(criteria);
+        }
     };
 
     const onChangeHandler = (
@@ -26,12 +41,18 @@ const FilterSortContainer = () => {
 
         if (e.target.value.length === 0) {
             searchParams.delete(queryKey);
-            setSearchParams(searchParams);
+            setSearchParams((searchParams) => {
+                searchParams.set(queryKey, '');
+                return searchParams;
+            });
             filterBeersListbyQueryKey(queryKey || '');
             return;
         }
 
-        setSearchParams({ [queryKey]: e.target.value });
+        setSearchParams(() => {
+            searchParams.set(queryKey, e.target.value);
+            return searchParams;
+        });
     };
 
     const onClearHandler = () => {
@@ -46,13 +67,7 @@ const FilterSortContainer = () => {
         <div className="filter-sort-container">
             <h3>Filter & Sort</h3>
             <form
-                onSubmit={(e: ChangeEvent<HTMLFormElement>) =>
-                    onSubmitHander(
-                        e,
-                        searchParams.get('keyword')! ||
-                            searchParams.get('style')!
-                    )
-                }
+                onSubmit={onSubmitHander}
                 className="filter-sort-container-inputs"
             >
                 <Input
@@ -82,17 +97,20 @@ const FilterSortContainer = () => {
                     ]}
                 />
                 <Select
-                    value=""
+                    value={searchParams.get('criteria') || ''}
                     label="Sort by criteria"
-                    onChange={() => {}}
+                    onChange={(e) => onChangeHandler(e, 'criteria')}
                     options={[
                         { value: '', label: 'Select criteria' },
                         { value: 'a-z', label: 'A-Z' },
                         { value: 'z-a', label: 'Z-A' },
-                        { value: 'highest', label: 'By highest price' },
-                        { value: 'lower', label: 'By lower price' },
+                        { value: 'high-low', label: 'high-low price' },
+                        { value: 'low-high', label: 'low-high price' },
                     ]}
                 />
+                <button className="filter-button" type="submit">
+                    Submit
+                </button>
                 <button
                     className="filter-button filter-button--clear"
                     type="button"
@@ -104,13 +122,6 @@ const FilterSortContainer = () => {
                     }
                 >
                     Clear all
-                </button>
-                <button
-                    className="filter-button"
-                    type="submit"
-                    // disabled={!searchParams.get('keyword')}
-                >
-                    Submit
                 </button>
             </form>
         </div>

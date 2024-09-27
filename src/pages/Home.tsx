@@ -28,19 +28,9 @@ const Home = () => {
         }
     };
 
-    console.log('beersList', beersList);
-
     useEffect(() => {
         fetchBeersList();
     }, []);
-
-    if (isLoading) {
-        return <p>Loading ...</p>;
-    }
-
-    if (error) {
-        return <p>{error}</p>;
-    }
 
     return (
         <>
@@ -62,15 +52,19 @@ const Home = () => {
             )}
             <FilterSortContainer />
             <div className="layout">
-                {beersList?.map((beerProps) => {
-                    return (
-                        <CardItem
-                            key={beerProps.id}
-                            {...beerProps}
-                            onBuyHandler={onBuyHandler}
-                        />
-                    );
-                })}
+                {isLoading && !error && <p>Loading...</p>}
+                {error && !isLoading && <p>{error}</p>}
+                {!isLoading &&
+                    !error &&
+                    beersList?.map((beerProps) => {
+                        return (
+                            <CardItem
+                                key={beerProps.id}
+                                {...beerProps}
+                                onBuyHandler={onBuyHandler}
+                            />
+                        );
+                    })}
             </div>
         </>
     );

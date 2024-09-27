@@ -7,7 +7,9 @@ export const formatNumberByPrice = (price: string) => {
 export const countTotal = (soldBeersList: TBeer[]) => {
     let result = 0;
     soldBeersList.forEach((soldBeer: TBeer) => {
-        result += parseFloat(formatNumberByPrice(soldBeer.price));
+        result +=
+            parseFloat(formatNumberByPrice(soldBeer.price)) *
+            (soldBeer.quantity || 1);
     });
 
     return result;
