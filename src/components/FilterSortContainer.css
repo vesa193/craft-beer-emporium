@@ -17,6 +17,12 @@
     gap: 1rem;
 }
 
+.filter-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 1rem;
+}
+
 .filter-button {
     height: max-content;
     background-color: #646cff;

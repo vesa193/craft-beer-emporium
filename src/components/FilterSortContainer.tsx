@@ -108,21 +108,23 @@ const FilterSortContainer = () => {
                         { value: 'low-high', label: 'low-high price' },
                     ]}
                 />
-                <button className="filter-button" type="submit">
-                    Submit
-                </button>
-                <button
-                    className="filter-button filter-button--clear"
-                    type="button"
-                    onClick={onClearHandler}
-                    disabled={
-                        !searchParams.get('keyword') &&
-                        !searchParams.get('style') &&
-                        !searchParams.get('criteria')
-                    }
-                >
-                    Clear all
-                </button>
+                <div className="filter-buttons">
+                    <button className="filter-button" type="submit">
+                        Submit
+                    </button>
+                    <button
+                        className="filter-button filter-button--clear"
+                        type="button"
+                        onClick={onClearHandler}
+                        disabled={
+                            !searchParams.get('keyword') &&
+                            !searchParams.get('style') &&
+                            !searchParams.get('criteria')
+                        }
+                    >
+                        Clear all
+                    </button>
+                </div>
             </form>
         </div>
     );
