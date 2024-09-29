@@ -10,6 +10,13 @@ interface TSoldBeer extends TBeer {
     quantity: number;
 }
 
+export type TChartData = {
+    id: number;
+    name: string;
+    average: number;
+    reviews: number;
+};
+
 export type TCriteria = 'a-z' | 'z-a' | 'high-low' | 'low-high';
 
 type TBeerState = {
@@ -17,6 +24,7 @@ type TBeerState = {
     beersList: TBeer[];
     soldBeersList: TSoldBeer[];
     filteredBeersList: TBeer[];
+    popularBeersList: TChartData[];
     isLoading: boolean;
     error: string;
     fetchBeersList: ({
@@ -30,12 +38,14 @@ type TBeerState = {
     filterBeersListbyQueryKey: (queryKey: string) => void;
     sortBeersListbyQueryKey: (criteria: TCriteria) => void;
     findSingleBeer: (id: number) => void;
+    filterTheMostPopularBeers: () => void;
 };
 
 export const useBeerStore = create<TBeerState>((set, get) => ({
     beersList: [],
     soldBeersList: [],
     filteredBeersList: [],
+    popularBeersList: [],
     singleBeer: null,
     isLoading: false,
     error: '',
@@ -161,6 +171,21 @@ export const useBeerStore = create<TBeerState>((set, get) => ({
                 singleBeer: findSingleBeerFromList([...state.beersList], id),
                 isLoading: false,
                 error: !state.singleBeer ? 'Beer not found' : '',
+            }));
+        }, 1000);
+    },
+    filterTheMostPopularBeers: () => {
+        setTimeout(() => {
+            set((state) => ({
+                popularBeersList: [...state.beersList]
+                    .sort((a, b) => b.rating.reviews - a.rating.reviews)
+                    .splice(0, 10)
+                    .map((beer) => ({
+                        id: beer.id,
+                        name: beer.name.slice(0, 10) + '...',
+                        average: beer.rating.average,
+                        reviews: beer.rating.reviews,
+                    })),
             }));
         }, 1000);
     },
