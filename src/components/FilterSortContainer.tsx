@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { Input, Select } from './Input';
 
 import './FilterSortContainer.css';
@@ -6,6 +6,13 @@ import { useSearchParams } from 'react-router-dom';
 import { TCriteria, useBeerStore } from '../stores/beersStore';
 
 const FilterSortContainer = () => {
+    const [queries, setQueries] = useState<{
+        name: string;
+        criteria: TCriteria | '';
+    }>({
+        name: '',
+        criteria: '',
+    });
     const [searchParams, setSearchParams] = useSearchParams();
     const {
         filterBeersListbyQueryKey,
@@ -17,8 +24,15 @@ const FilterSortContainer = () => {
     const onSubmitHander = (e: ChangeEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const criteria = searchParams.get('criteria') as TCriteria;
-        const name = searchParams.get('name')!;
+        const name = queries.name;
+        const criteria = queries.criteria as TCriteria;
+
+        setSearchParams(() => {
+            if (queries.name) searchParams.set('name', queries.name);
+            if (queries.criteria)
+                searchParams.set('criteria', queries.criteria);
+            return searchParams;
+        });
 
         if (!criteria && !name) {
             fetchBeersList({ name, criteria });
@@ -42,6 +56,11 @@ const FilterSortContainer = () => {
         e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>,
         queryKey: string
     ) => {
+        setQueries({
+            ...queries,
+            [queryKey]: e.target.value,
+        });
+
         if (!searchParams.get(queryKey)) {
             searchParams.delete(queryKey);
             setSearchParams(searchParams);
@@ -57,11 +76,6 @@ const FilterSortContainer = () => {
             });
             return;
         }
-
-        setSearchParams(() => {
-            searchParams.set(queryKey, e.target.value);
-            return searchParams;
-        });
     };
 
     const onClearHandler = () => {
@@ -80,13 +94,15 @@ const FilterSortContainer = () => {
             >
                 <Input
                     type="text"
-                    value={searchParams.get('name') || ''}
+                    value={queries.name || searchParams.get('name') || ''}
                     placeholder="Name of beer"
                     label="Filter by name"
                     onChange={(e) => onChangeHandler(e, 'name')}
                 />
                 <Select
-                    value={searchParams.get('criteria') || ''}
+                    value={
+                        queries.criteria || searchParams.get('criteria') || ''
+                    }
                     label="Sort by criteria"
                     onChange={(e) => onChangeHandler(e, 'criteria')}
                     options={[
