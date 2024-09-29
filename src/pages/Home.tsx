@@ -1,16 +1,14 @@
-import React, { useEffect } from 'react';
-import { TCriteria, useBeerStore } from '../stores/beersStore';
+import React from 'react';
+import { useBeerStore } from '../stores/beersStore';
 import CardItem from '../components/CardItem';
 
 import '../components/Layout.css';
 import { useDialogStore } from '../stores/dialogStore';
 import Dialog from '../components/Dialog';
 import FilterSortContainer from '../components/FilterSortContainer';
-import { useSearchParams } from 'react-router-dom';
 
 const Home = () => {
     const {
-        fetchBeersList,
         beersList,
         filteredBeersList,
         isLoading,
@@ -19,9 +17,8 @@ const Home = () => {
         soldBeersList,
     } = useBeerStore((state) => state);
     const { isOpen, onOpen } = useDialogStore((state) => state);
-    const [searchParams] = useSearchParams();
-
     const lastSoldBeer = soldBeersList[soldBeersList?.length - 1];
+
     const onBuyHandler = (beerId: number) => {
         const soldBeer = beersList.find((beer) => beer.id === beerId);
 
@@ -30,13 +27,6 @@ const Home = () => {
             onOpen();
         }
     };
-
-    useEffect(() => {
-        fetchBeersList({
-            name: searchParams.get('name') || '',
-            criteria: (searchParams.get('criteria') as TCriteria) || '',
-        });
-    }, []);
 
     return (
         <>

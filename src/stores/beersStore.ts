@@ -1,6 +1,10 @@
 import { create } from 'zustand';
 import { TBeer } from '../types/types';
-import { filterBeersList, sortBeersList } from '../utils/filterAndSort';
+import {
+    filterBeersList,
+    findSingleBeerFromList,
+    sortBeersList,
+} from '../utils/filterAndSort';
 
 interface TSoldBeer extends TBeer {
     quantity: number;
@@ -9,6 +13,7 @@ interface TSoldBeer extends TBeer {
 export type TCriteria = 'a-z' | 'z-a' | 'high-low' | 'low-high';
 
 type TBeerState = {
+    singleBeer: TBeer | null;
     beersList: TBeer[];
     soldBeersList: TSoldBeer[];
     filteredBeersList: TBeer[];
@@ -24,12 +29,14 @@ type TBeerState = {
     updateSoldBeers: (newBeer: TBeer) => void;
     filterBeersListbyQueryKey: (queryKey: string) => void;
     sortBeersListbyQueryKey: (criteria: TCriteria) => void;
+    findSingleBeer: (id: number) => void;
 };
 
 export const useBeerStore = create<TBeerState>((set, get) => ({
     beersList: [],
     soldBeersList: [],
     filteredBeersList: [],
+    singleBeer: null,
     isLoading: false,
     error: '',
 
@@ -141,6 +148,17 @@ export const useBeerStore = create<TBeerState>((set, get) => ({
                         : [...state.beersList],
                     criteria
                 ),
+                isLoading: false,
+            }));
+        }, 1000);
+    },
+    findSingleBeer: (id: number) => {
+        set(() => ({
+            isLoading: true,
+        }));
+        setTimeout(() => {
+            set((state) => ({
+                singleBeer: findSingleBeerFromList([...state.beersList], id),
                 isLoading: false,
             }));
         }, 1000);

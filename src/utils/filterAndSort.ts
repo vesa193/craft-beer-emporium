@@ -21,3 +21,10 @@ export const sortBeersList = (beersList: TBeer[], criteria: TCriteria) =>
         };
         return critariaType[criteria]();
     });
+
+export const findSingleBeerFromList = (
+    beersList: TBeer[],
+    id: number
+): TBeer | undefined => {
+    return beersList.find((beer) => beer.id === id);
+};
