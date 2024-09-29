@@ -11,8 +11,17 @@
 
         img {
             width: 280px;
+            min-height: 100px;
             height: 150px;
             object-fit: contain;
+        }
+    }
+
+    .card-body {
+        min-height: 190px;
+
+        & h3 {
+            min-height: 50px;
         }
     }
 }

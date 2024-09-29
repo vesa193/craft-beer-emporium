@@ -11,6 +11,7 @@ const Home = () => {
     const {
         fetchBeersList,
         beersList,
+        filteredBeersList,
         isLoading,
         error,
         updateSoldBeers,
@@ -31,6 +32,8 @@ const Home = () => {
     useEffect(() => {
         fetchBeersList();
     }, []);
+
+    console.log('filteredBeersList', filteredBeersList);
 
     return (
         <>
@@ -56,11 +59,14 @@ const Home = () => {
                 {error && !isLoading && <p>{error}</p>}
                 {!isLoading &&
                     !error &&
-                    beersList?.map((beerProps) => {
+                    (filteredBeersList.length > 0
+                        ? filteredBeersList
+                        : beersList
+                    )?.map((beer) => {
                         return (
                             <CardItem
-                                key={beerProps.id}
-                                {...beerProps}
+                                key={beer.id}
+                                {...beer}
                                 onBuyHandler={onBuyHandler}
                             />
                         );

@@ -32,11 +32,12 @@ export const Input = ({
     placeholder,
     onChange,
     disabled,
+    label,
 }: InputProps) => {
     return (
         <div className="input">
             <label htmlFor="input-field">
-                <small>Filter by keyword</small>
+                <small>{label}</small>
             </label>
             <input
                 id="input-field"
@@ -70,6 +71,7 @@ export const Select = ({
                 onChange={(e) => onChange(e)}
                 disabled={disabled}
             >
+                <option value=""></option>
                 {options?.map(({ value, label }) => {
                     return (
                         <option key={value} value={value}>

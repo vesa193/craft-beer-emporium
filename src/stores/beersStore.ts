@@ -11,6 +11,7 @@ export type TCriteria = 'a-z' | 'z-a' | 'high-low' | 'low-high';
 type TBeerState = {
     beersList: TBeer[];
     soldBeersList: TSoldBeer[];
+    filteredBeersList: TBeer[];
     isLoading: boolean;
     error: string;
     fetchBeersList: () => void;
@@ -22,6 +23,7 @@ type TBeerState = {
 export const useBeerStore = create<TBeerState>((set, get) => ({
     beersList: [],
     soldBeersList: [],
+    filteredBeersList: [],
     isLoading: false,
     error: '',
 
@@ -84,16 +86,20 @@ export const useBeerStore = create<TBeerState>((set, get) => ({
         });
     },
     filterBeersListbyQueryKey: (queryKey: string) => {
-        // TODO: this is temporary solution
-        // should be refactored
-        // should have separately array for filtered, that would be modified by copied items from beersList array
-        get().fetchBeersList();
+        console.log('queryKey', queryKey);
+        if (queryKey === '' || queryKey === 'keyword') {
+            set(() => ({
+                filteredBeersList: [],
+                beersList: get().beersList,
+            }));
+        }
+
         set(() => ({
             isLoading: true,
         }));
         setTimeout(() => {
             set((state) => ({
-                beersList: state.beersList.filter(({ name }) =>
+                filteredBeersList: [...state.beersList].filter(({ name }) =>
                     name.toLowerCase().includes(queryKey.toLowerCase())
                 ),
                 isLoading: false,
@@ -106,7 +112,10 @@ export const useBeerStore = create<TBeerState>((set, get) => ({
         }));
         setTimeout(() => {
             set((state) => ({
-                beersList: state.beersList.sort((a, b) => {
+                filteredBeersList: (state.filteredBeersList.length > 0
+                    ? [...state.filteredBeersList]
+                    : [...state.beersList]
+                )?.sort((a, b) => {
                     const critariaType = {
                         'a-z': () => a.name.localeCompare(b.name),
                         'z-a': () => b.name.localeCompare(a.name),
