@@ -3,21 +3,29 @@ import { Input, Select } from './Input';
 
 import './FilterSortContainer.css';
 import { useSearchParams } from 'react-router-dom';
-import { useBeerStore } from '../stores/beersStore';
+import { TCriteria, useBeerStore } from '../stores/beersStore';
 
 const FilterSortContainer = () => {
     const [searchParams, setSearchParams] = useSearchParams();
-    const { filterBeersListbyQueryKey, sortBeersListbyQueryKey, isLoading } =
-        useBeerStore((state) => state);
+    const {
+        filterBeersListbyQueryKey,
+        sortBeersListbyQueryKey,
+        fetchBeersList,
+        isLoading,
+    } = useBeerStore((state) => state);
 
     const onSubmitHander = (e: ChangeEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const criteria = searchParams.get('criteria');
-        const queryKey = searchParams.get('name');
+        const criteria = searchParams.get('criteria') as TCriteria;
+        const name = searchParams.get('name')!;
 
-        if (queryKey) {
-            filterBeersListbyQueryKey(queryKey);
+        if (!criteria && !name) {
+            fetchBeersList({ name, criteria });
+        }
+
+        if (name) {
+            filterBeersListbyQueryKey(name);
         }
 
         if (
@@ -43,7 +51,10 @@ const FilterSortContainer = () => {
         if (e.target.value?.length === 0) {
             searchParams.delete(queryKey);
             setSearchParams(searchParams);
-            filterBeersListbyQueryKey(searchParams.get(queryKey) || '');
+            fetchBeersList({
+                name: searchParams.get('name') || '',
+                criteria: searchParams.get('criteria') as TCriteria,
+            });
             return;
         }
 
@@ -98,7 +109,7 @@ const FilterSortContainer = () => {
                         type="button"
                         onClick={onClearHandler}
                         disabled={
-                            !searchParams.get('name') ||
+                            !searchParams.get('name') &&
                             !searchParams.get('criteria')
                         }
                     >
