@@ -79,6 +79,7 @@ const FilterSortContainer = () => {
     };
 
     const onClearHandler = () => {
+        setQueries({ name: '', criteria: '' });
         searchParams.delete('name');
         searchParams.delete('criteria');
         setSearchParams(searchParams);
