@@ -160,6 +160,7 @@ export const useBeerStore = create<TBeerState>((set, get) => ({
             set((state) => ({
                 singleBeer: findSingleBeerFromList([...state.beersList], id),
                 isLoading: false,
+                error: !state.singleBeer ? 'Beer not found' : '',
             }));
         }, 1000);
     },

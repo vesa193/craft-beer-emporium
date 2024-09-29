@@ -1,12 +1,28 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router';
 import { useBeerStore } from '../stores/beersStore';
-import { Link } from 'react-router-dom';
 import BeerDetailCard from '../components/BeerDetailCard';
+import { useDialogStore } from '../stores/dialogStore';
 
 const BeerDetails = () => {
     const { beerId } = useParams();
-    const { singleBeer, findSingleBeer, isLoading } = useBeerStore();
+    const {
+        singleBeer,
+        findSingleBeer,
+        isLoading,
+        updateSoldBeers,
+        beersList,
+        error,
+    } = useBeerStore();
+    const { isOpen, onOpen } = useDialogStore();
+
+    const onBuyHandler = (beerId: number) => {
+        const soldBeer = beersList.find((beer) => beer.id === beerId);
+        if (soldBeer) {
+            updateSoldBeers(soldBeer);
+            onOpen();
+        }
+    };
 
     useEffect(() => {
         findSingleBeer(Number(beerId));
@@ -16,17 +32,18 @@ const BeerDetails = () => {
         return <p>Loading...</p>;
     }
 
-    if (!singleBeer) {
-        return (
-            <div>
-                <p>Beer not found</p>
-                <Link to="/">Go back</Link>
-            </div>
-        );
+    if (error) {
+        return <p>{error}</p>;
     }
 
-    if (!isLoading && singleBeer) {
-        return <BeerDetailCard {...singleBeer} />;
+    if (singleBeer) {
+        return (
+            <BeerDetailCard
+                singleBeer={singleBeer}
+                isOpen={isOpen}
+                onBuyHandler={onBuyHandler}
+            />
+        );
     }
 };
 
