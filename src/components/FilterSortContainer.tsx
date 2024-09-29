@@ -7,7 +7,6 @@ import { useBeerStore } from '../stores/beersStore';
 
 const FilterSortContainer = () => {
     const [searchParams, setSearchParams] = useSearchParams();
-    console.log('searchParams', searchParams.toString());
     const { filterBeersListbyQueryKey, sortBeersListbyQueryKey, isLoading } =
         useBeerStore((state) => state);
 
@@ -35,7 +34,7 @@ const FilterSortContainer = () => {
         e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>,
         queryKey: string
     ) => {
-        if (!searchParams.get(queryKey) && searchParams.has(queryKey)) {
+        if (!searchParams.get(queryKey)) {
             searchParams.delete(queryKey);
             setSearchParams(searchParams);
         }
@@ -44,6 +43,7 @@ const FilterSortContainer = () => {
         if (e.target.value?.length === 0) {
             searchParams.delete(queryKey);
             setSearchParams(searchParams);
+            filterBeersListbyQueryKey(searchParams.get(queryKey) || '');
             return;
         }
 

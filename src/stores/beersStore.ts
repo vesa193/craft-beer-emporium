@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { TBeer } from '../types/types';
-import { formatNumberByPrice } from '../utils/format';
+import { filterBeersList, sortBeersList } from '../utils/filterAndSort';
 
 interface TSoldBeer extends TBeer {
     quantity: number;
@@ -14,7 +14,13 @@ type TBeerState = {
     filteredBeersList: TBeer[];
     isLoading: boolean;
     error: string;
-    fetchBeersList: () => void;
+    fetchBeersList: ({
+        name,
+        criteria,
+    }: {
+        name: string;
+        criteria: TCriteria;
+    }) => void;
     updateSoldBeers: (newBeer: TBeer) => void;
     filterBeersListbyQueryKey: (queryKey: string) => void;
     sortBeersListbyQueryKey: (criteria: TCriteria) => void;
@@ -27,7 +33,7 @@ export const useBeerStore = create<TBeerState>((set, get) => ({
     isLoading: false,
     error: '',
 
-    fetchBeersList: async () => {
+    fetchBeersList: async ({ name, criteria }) => {
         const url = import.meta.env.VITE_API_URL;
 
         set(() => ({
@@ -46,9 +52,26 @@ export const useBeerStore = create<TBeerState>((set, get) => ({
                 }));
             }
 
-            const data = await response.json();
+            const beersList = await response.json();
+            let filteredBeersList = [...beersList];
+
+            if (name) {
+                filteredBeersList = filterBeersList(
+                    [...filteredBeersList],
+                    name
+                );
+            }
+
+            if (criteria) {
+                filteredBeersList = sortBeersList(
+                    [...filteredBeersList],
+                    criteria
+                );
+            }
+
             set(() => ({
-                beersList: data,
+                beersList,
+                filteredBeersList,
                 isLoading: false,
                 error: '',
             }));
@@ -86,7 +109,6 @@ export const useBeerStore = create<TBeerState>((set, get) => ({
         });
     },
     filterBeersListbyQueryKey: (queryKey: string) => {
-        console.log('queryKey', queryKey);
         if (queryKey === '' || queryKey === 'keyword') {
             set(() => ({
                 filteredBeersList: [],
@@ -99,8 +121,9 @@ export const useBeerStore = create<TBeerState>((set, get) => ({
         }));
         setTimeout(() => {
             set((state) => ({
-                filteredBeersList: [...state.beersList].filter(({ name }) =>
-                    name.toLowerCase().includes(queryKey.toLowerCase())
+                filteredBeersList: filterBeersList(
+                    [...state.beersList],
+                    queryKey
                 ),
                 isLoading: false,
             }));
@@ -112,22 +135,12 @@ export const useBeerStore = create<TBeerState>((set, get) => ({
         }));
         setTimeout(() => {
             set((state) => ({
-                filteredBeersList: (state.filteredBeersList.length > 0
-                    ? [...state.filteredBeersList]
-                    : [...state.beersList]
-                )?.sort((a, b) => {
-                    const critariaType = {
-                        'a-z': () => a.name.localeCompare(b.name),
-                        'z-a': () => b.name.localeCompare(a.name),
-                        'high-low': () =>
-                            parseFloat(formatNumberByPrice(b.price)) -
-                            parseFloat(formatNumberByPrice(a.price)),
-                        'low-high': () =>
-                            parseFloat(formatNumberByPrice(a.price)) -
-                            parseFloat(formatNumberByPrice(b.price)),
-                    };
-                    return critariaType[criteria]();
-                }),
+                filteredBeersList: sortBeersList(
+                    state.filteredBeersList.length > 0
+                        ? [...state.filteredBeersList]
+                        : [...state.beersList],
+                    criteria
+                ),
                 isLoading: false,
             }));
         }, 1000);
