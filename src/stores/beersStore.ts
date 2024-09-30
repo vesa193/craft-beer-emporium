@@ -86,6 +86,16 @@ export const useBeerStore = create<TBeerState>((set, get) => ({
                     criteria
                 );
             }
+            console.log('filteredBeersList', filteredBeersList);
+
+            if (filteredBeersList.length === 0) {
+                set(() => ({
+                    filteredBeersList: [],
+                    error: 'No results found',
+                    isLoading: false,
+                }));
+                return;
+            }
 
             set(() => ({
                 beersList,
@@ -137,6 +147,17 @@ export const useBeerStore = create<TBeerState>((set, get) => ({
         set(() => ({
             isLoading: true,
         }));
+        const filteredBeers = filterBeersList([...get().beersList], queryKey);
+
+        if (filteredBeers.length === 0) {
+            set(() => ({
+                filteredBeersList: [],
+                error: 'No results found',
+                isLoading: false,
+            }));
+            return;
+        }
+
         set((state) => ({
             filteredBeersList: filterBeersList([...state.beersList], queryKey),
             isLoading: false,

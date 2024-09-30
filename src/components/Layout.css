@@ -4,4 +4,9 @@
     justify-content: center;
     gap: 1rem;
     padding: 2rem 1rem;
+
+    .error,
+    .loading {
+        text-align: center;
+    }
 }

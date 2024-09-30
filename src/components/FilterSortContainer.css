@@ -19,17 +19,22 @@
 
 .filter-buttons {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 5rem));
 }
 
 .filter-button {
-    height: max-content;
+    max-width: 5rem;
+    min-height: 3rem;
     background-color: #646cff;
 
     &:disabled {
         background-color: #d3d3d3;
         color: gray;
+        border: 0;
+    }
+
+    & img {
+        width: 1.5rem;
     }
 }
 

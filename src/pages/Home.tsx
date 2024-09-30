@@ -48,8 +48,8 @@ const Home = () => {
             )}
             <FilterSortContainer />
             <div className="layout">
-                {isLoading && !error && <p>Loading...</p>}
-                {error && !isLoading && <p>{error}</p>}
+                {isLoading && !error && <p className="loading">Loading...</p>}
+                {error && !isLoading && <p className="error">{error}</p>}
                 {!isLoading &&
                     !error &&
                     (filteredBeersList.length > 0
