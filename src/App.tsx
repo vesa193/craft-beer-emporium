@@ -1,24 +1,18 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Outlet } from 'react-router';
 import './App.css';
 import { Navbar } from './components/Navbar';
 import { Sidebar } from './components/Sidebar';
-import { TCriteria, useBeerStore } from './stores/beersStore';
+import { useBeerStore } from './stores/beersStore';
 import { SidebarItem } from './components/SidebarItem';
 import { countTotal } from './utils/format';
-import { useSearchParams } from 'react-router-dom';
 import style from './components/Sidebar.module.css';
+import { useBeersList } from './hooks/useBeersList';
 
 function App() {
-    const { soldBeersList, fetchBeersList } = useBeerStore();
-    // const [searchParams] = useSearchParams();
+    const { soldBeersList } = useBeerStore();
 
-    // useEffect(() => {
-    //     fetchBeersList({
-    //         name: searchParams.get('name') || '',
-    //         criteria: (searchParams.get('criteria') as TCriteria) || '',
-    //     });
-    // }, []);
+    useBeersList();
 
     return (
         <>

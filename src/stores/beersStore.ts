@@ -153,7 +153,6 @@ export const useBeerStore = create<TBeerState>((set, get) => ({
         });
     },
     filterBeersListbyQueryKey: (queryKey: string) => {
-        console.log('queryKey', queryKey, get().beersList);
         if (queryKey === '' || queryKey === 'name') {
             get().fetchBeersList({});
             set(() => ({

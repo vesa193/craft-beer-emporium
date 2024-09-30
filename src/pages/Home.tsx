@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { TCriteria, useBeerStore } from '../stores/beersStore';
+import React, { useMemo, useState } from 'react';
+import { useBeerStore } from '../stores/beersStore';
 import CardItem from '../components/CardItem';
 import Dialog from '../components/Dialog';
 import FilterSortContainer from '../components/FilterSortContainer';
 import spinnerIcon from '../assets/icons/spinner-icon.svg';
 
 import style from '../components/Layout.module.css';
-import { useSearchParams } from 'react-router-dom';
+import { useBeersList } from '../hooks/useBeersList';
 
 const Home = () => {
     const {
@@ -15,19 +15,19 @@ const Home = () => {
         isLoading,
         error,
         updateSoldBeers,
-        fetchBeersList,
         soldBeersList,
     } = useBeerStore((state) => state);
     const [isOpen, setIsOpen] = useState(false);
-    const [searchParams] = useSearchParams();
     const lastSoldBeer = soldBeersList[soldBeersList?.length - 1];
 
-    useEffect(() => {
-        fetchBeersList({
-            name: searchParams.get('name') || '',
-            criteria: (searchParams.get('criteria') as TCriteria) || '',
-        });
-    }, []);
+    const memoizeBeersList = useMemo(() => {
+        return [...beersList];
+    }, [beersList]);
+    const memoizeFilteredBeersList = useMemo(() => {
+        return [...filteredBeersList];
+    }, [filteredBeersList]);
+
+    useBeersList();
 
     const onBuyHandler = (beerId: number) => {
         const soldBeer = beersList.find((beer) => beer.id === beerId);
@@ -68,9 +68,9 @@ const Home = () => {
                 {error && !isLoading && <p className={style.error}>{error}</p>}
                 {!isLoading &&
                     !error &&
-                    (filteredBeersList.length > 0
-                        ? filteredBeersList
-                        : beersList
+                    (memoizeFilteredBeersList.length > 0
+                        ? memoizeFilteredBeersList
+                        : memoizeBeersList
                     )?.map((beer) => {
                         return (
                             <CardItem
