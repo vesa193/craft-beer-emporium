@@ -23,14 +23,11 @@ export const CardItem = ({
 
     return (
         <div className={style.card}>
-            <div className={style.cardHeader}>
-                <img
-                    src={image}
-                    alt={name}
-                    width="100%"
-                    height="100%"
-                    onClick={() => navigate(`${pathname}/${id}`)}
-                />
+            <div
+                className={style.cardHeader}
+                onClick={() => navigate(`${pathname}/${id}`)}
+            >
+                <img src={image} alt={name} width="100%" height="100%" />
             </div>
             <div className={style.cardBody}>
                 <span>{price}</span>
