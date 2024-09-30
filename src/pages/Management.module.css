@@ -1,4 +1,5 @@
 .management {
+    padding: 1rem;
     margin: 1.5rem 1.5rem 0;
 
     & img {
@@ -25,6 +26,7 @@
     & .managementContent {
         background-color: white;
         max-width: 960px;
+        min-width: 320px;
         border-radius: 8px;
         margin: 4rem auto;
         padding: 1.5rem;

@@ -52,8 +52,8 @@ const Management = () => {
 
     return (
         <div className={style.management}>
+            <h2>Management page</h2>
             <div className={style.managementHeader}>
-                <h2>Management page</h2>
                 <button
                     type="button"
                     onClick={() => setChartView(!isChartView)}
