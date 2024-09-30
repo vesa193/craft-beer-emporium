@@ -1,4 +1,10 @@
 .management {
+    margin: 1.5rem 1.5rem 0;
+
+    & img {
+        cursor: pointer;
+    }
+
     & .managementHeader {
         display: flex;
         justify-content: space-between;
@@ -6,7 +12,6 @@
         background-color: white;
         padding: 1rem;
         border-radius: 8px;
-        margin: 1.5rem 1.5rem 0;
         color: #212121;
 
         & h2 {
@@ -19,8 +24,7 @@
 
     & .managementContent {
         background-color: white;
-        width: max-content;
-        min-width: 400px;
+        max-width: 960px;
         border-radius: 8px;
         margin: 4rem auto;
         padding: 1.5rem;
@@ -34,17 +38,12 @@
         & form {
             display: grid;
             gap: 1rem;
-        }
-    }
 
-    & .managementForm {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: white;
-        padding: 1rem;
-        border-radius: 8px;
-        margin: 1.5rem 1.5rem 0;
-        color: #212121;
+            & .managementInputsContainer {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+                gap: 1rem;
+            }
+        }
     }
 }

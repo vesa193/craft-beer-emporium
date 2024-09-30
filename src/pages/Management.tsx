@@ -1,10 +1,11 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useBeerStore } from '../stores/beersStore';
+import { Input } from '../components/Input';
 import { Chart } from 'react-chartjs-2';
 import 'chart.js/auto';
+import arrowLeft from '../assets/icons/arrow-left-icon.svg';
 
 import style from './Management.module.css';
-import { Input } from '../components/Input';
 
 const Management = () => {
     const {
@@ -99,47 +100,57 @@ const Management = () => {
                     </>
                 ) : (
                     <div>
+                        <img
+                            width={40}
+                            src={arrowLeft}
+                            alt="back"
+                            onClick={() => setChartView(true)}
+                        ></img>
                         <h4>Add beer</h4>
                         <form onSubmit={onSubmitHandler}>
-                            <Input
-                                invertColor
-                                type="text"
-                                label="Name*"
-                                value={formData.name}
-                                placeholder="Paulaner"
-                                onChange={(e) => onHandleChange(e, 'name')}
-                            />
-                            <Input
-                                invertColor
-                                type="text"
-                                label="Price*"
-                                value={formData.price}
-                                placeholder="19.87"
-                                onChange={(e) => onHandleChange(e, 'price')}
-                            />
-                            <Input
-                                invertColor
-                                type="text"
-                                label="Rate*"
-                                value={String(formData.rate)}
-                                placeholder="4.75"
-                                onChange={(e) => onHandleChange(e, 'rate')}
-                            />
-                            <Input
-                                invertColor
-                                type="text"
-                                label="Reviews*"
-                                value={String(formData.reviews)}
-                                onChange={(e) => onHandleChange(e, 'reviews')}
-                            />
-                            <Input
-                                invertColor
-                                type="text"
-                                label="Image link"
-                                value={formData.image}
-                                placeholder="https://images.punkapi.com/v2/keg.png"
-                                onChange={(e) => onHandleChange(e, 'image')}
-                            />
+                            <div className={style.managementInputsContainer}>
+                                <Input
+                                    invertColor
+                                    type="text"
+                                    label="Name*"
+                                    value={formData.name}
+                                    placeholder="Paulaner"
+                                    onChange={(e) => onHandleChange(e, 'name')}
+                                />
+                                <Input
+                                    invertColor
+                                    type="text"
+                                    label="Price*"
+                                    value={formData.price}
+                                    placeholder="19.87"
+                                    onChange={(e) => onHandleChange(e, 'price')}
+                                />
+                                <Input
+                                    invertColor
+                                    type="text"
+                                    label="Rate*"
+                                    value={String(formData.rate)}
+                                    placeholder="4.75"
+                                    onChange={(e) => onHandleChange(e, 'rate')}
+                                />
+                                <Input
+                                    invertColor
+                                    type="text"
+                                    label="Reviews*"
+                                    value={String(formData.reviews)}
+                                    onChange={(e) =>
+                                        onHandleChange(e, 'reviews')
+                                    }
+                                />
+                                <Input
+                                    invertColor
+                                    type="text"
+                                    label="Image link"
+                                    value={formData.image}
+                                    placeholder="https://images.punkapi.com/v2/keg.png"
+                                    onChange={(e) => onHandleChange(e, 'image')}
+                                />
+                            </div>
                             <button type="submit">Add</button>
                         </form>
                     </div>

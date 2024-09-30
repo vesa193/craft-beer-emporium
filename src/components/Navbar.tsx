@@ -1,22 +1,27 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import craftBeerEmporiumLogo from '../assets/craft-beer-emporium.jpg';
 import cartIcon from '../assets/icons/cart-icon.png';
 import { useBeerStore } from '../stores/beersStore';
 import { useSidebarStore } from '../stores/sidebarStore';
 
 import style from './Navbar.module.css';
+import { Link } from 'react-router-dom';
 
 export const Navbar = () => {
     const { soldBeersList } = useBeerStore((state) => state);
     const { onOpen } = useSidebarStore((state) => state);
+    const { pathname } = useLocation();
+
     return (
         <header className={style.header}>
-            <img
-                className={style.headerLogo}
-                src={craftBeerEmporiumLogo}
-                alt="Craft Beer Emp Logo"
-            />
+            <Link to={!pathname.includes('/beers') ? '/beers' : pathname}>
+                <img
+                    className={style.headerLogo}
+                    src={craftBeerEmporiumLogo}
+                    alt="Craft Beer Emp Logo"
+                />
+            </Link>
             <nav>
                 <ul>
                     <li>
