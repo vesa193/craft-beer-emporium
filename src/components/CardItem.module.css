@@ -1,12 +1,13 @@
 .card {
     width: 280px;
     display: grid;
-    gap: 1rem;
+    gap: 2rem 1rem;
     background-color: aliceblue;
     color: #212121;
     border-radius: 8px;
+    padding: 1rem 2rem;
 
-    .card-header {
+    .cardHeader {
         height: 150px;
 
         img {
@@ -18,7 +19,7 @@
         }
     }
 
-    .card-body {
+    .cardBody {
         min-height: 190px;
 
         & h3 {

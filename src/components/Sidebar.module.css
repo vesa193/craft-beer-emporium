@@ -1,4 +1,4 @@
-.sidebar-backdrop {
+.sidebarBackdrop {
     position: fixed;
     background: rgba(0, 0, 0, 0.7);
     z-index: 1;
@@ -21,7 +21,7 @@
     color: black;
     padding: 1rem;
 
-    & .sidebar-header {
+    & .sidebarHeader {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -32,11 +32,11 @@
         }
     }
 
-    & .sidebar-items {
+    & .sidebarItems {
         overflow-y: auto;
     }
 
-    & .sidebar-total {
+    & .sidebarTotal {
         display: flex;
         justify-content: space-between;
     }

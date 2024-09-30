@@ -1,4 +1,4 @@
-.filter-sort-container {
+.filterSortContainer {
     background-color: aliceblue;
     border-radius: 8px;
     padding: 1rem;
@@ -10,19 +10,19 @@
     }
 }
 
-.filter-sort-container-inputs {
+.filterSortContainerInputs {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     align-items: flex-end;
     gap: 1rem;
 }
 
-.filter-buttons {
+.filterButtons {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 5rem));
 }
 
-.filter-button {
+.filterButton {
     max-width: 5rem;
     min-height: 3rem;
     background-color: #646cff;
@@ -38,6 +38,6 @@
     }
 }
 
-.filter-button--clear {
+.filterButtonClear {
     background-color: rgb(215, 140, 0);
 }

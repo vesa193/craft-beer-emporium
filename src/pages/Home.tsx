@@ -1,11 +1,11 @@
 import React from 'react';
 import { useBeerStore } from '../stores/beersStore';
 import CardItem from '../components/CardItem';
-
-import '../components/Layout.css';
 import { useDialogStore } from '../stores/dialogStore';
 import Dialog from '../components/Dialog';
 import FilterSortContainer from '../components/FilterSortContainer';
+
+import style from '../components/Layout.module.css';
 
 const Home = () => {
     const {
@@ -47,9 +47,11 @@ const Home = () => {
                 />
             )}
             <FilterSortContainer />
-            <div className="layout">
-                {isLoading && !error && <p className="loading">Loading...</p>}
-                {error && !isLoading && <p className="error">{error}</p>}
+            <div className={style.layout}>
+                {isLoading && !error && (
+                    <p className={style.loading}>Loading...</p>
+                )}
+                {error && !isLoading && <p className={style.error}>{error}</p>}
                 {!isLoading &&
                     !error &&
                     (filteredBeersList.length > 0

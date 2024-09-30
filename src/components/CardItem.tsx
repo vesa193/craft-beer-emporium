@@ -1,8 +1,8 @@
 import React from 'react';
-import { TBeer } from '../types/types';
-
-import './CardItem.css';
+import { type TBeer } from '../types/types';
 import { useLocation, useNavigate } from 'react-router';
+
+import style from './CardItem.module.css';
 
 type CardItemProps = TBeer;
 
@@ -22,8 +22,8 @@ export const CardItem = ({
     const { pathname } = useLocation();
 
     return (
-        <div className="card">
-            <div className="card-header">
+        <div className={style.card}>
+            <div className={style.cardHeader}>
                 <img
                     src={image}
                     alt={name}
@@ -32,7 +32,7 @@ export const CardItem = ({
                     onClick={() => navigate(`${pathname}/${id}`)}
                 />
             </div>
-            <div className="card-body">
+            <div className={style.cardBody}>
                 <span>{price}</span>
                 <h3 onClick={() => navigate(`${pathname}/${id}`)}>{name}</h3>
                 <span>{`Average Rate: ${Math.ceil(average)}`}</span>
@@ -40,7 +40,7 @@ export const CardItem = ({
                     <span>{`Reviews: ${reviews}`}</span>
                 </p>
             </div>
-            <div className="card-footer">
+            <div className={style.cardFooter}>
                 <button type="button" onClick={() => onBuyHandler(id)}>
                     Buy now
                 </button>

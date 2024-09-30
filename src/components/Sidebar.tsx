@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { useSidebarStore } from '../stores/sidebarStore';
 import closeIcon from '../assets/icons/close-icon.svg';
 
-import './Sidebar.css';
+import style from './Sidebar.module.css';
 type SidebarProps = {
     children: JSX.Element;
 };
@@ -14,9 +14,9 @@ export const Sidebar = ({ children }: SidebarProps) => {
         isOpen &&
         createPortal(
             <>
-                <div className="sidebar-backdrop"></div>
-                <div className="sidebar">
-                    <div className="sidebar-header">
+                <div className={style.sidebarBackdrop}></div>
+                <div className={style.sidebar}>
+                    <div className={style.sidebarHeader}>
                         <h3>Cart Items</h3>
                         <img src={closeIcon} alt="close" onClick={onClose} />
                     </div>

@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from 'react';
 
-import './Input.css';
+import style from './Input.module.css';
 
 type TInputType = 'text' | 'select' | 'number';
 
@@ -38,16 +38,16 @@ export const Input = ({
     invertColor = false,
 }: InputProps) => {
     return (
-        <div className="input">
+        <div className={style.input}>
             <label
-                htmlFor="input-field"
-                className={`input-label ${invertColor ? 'invert-color' : ''}`.trim()}
+                htmlFor="inputField"
+                className={`${style.inputLabel} ${invertColor ? style.invertColor : ''}`.trim()}
             >
                 <small>{label}</small>
             </label>
             <input
-                id="input-field"
-                className={`input-field ${invertColor ? 'invert-color' : ''}`.trim()}
+                id="inputField"
+                className={`${style.inputField} ${invertColor ? style.invertColor : ''}`.trim()}
                 type={type || 'text'}
                 value={value}
                 placeholder={placeholder}
@@ -69,13 +69,13 @@ export const Select = ({
     invertColor = false,
 }: SelectProps) => {
     return (
-        <div className="select">
-            <label htmlFor="select-field">
+        <div className={style.select}>
+            <label htmlFor={style.selectField}>
                 <small>{label}</small>
             </label>
             <select
-                id="select-field"
-                className={`select-field ${invertColor ? 'invert-color' : ''}`.trim()}
+                id={style.selectField}
+                className={`${style.selectField} ${invertColor ? style.invertColor : ''}`.trim()}
                 value={value}
                 onChange={(e) => onChange(e)}
                 disabled={disabled}

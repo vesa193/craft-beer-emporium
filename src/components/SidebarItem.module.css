@@ -1,4 +1,4 @@
-.sidebar-item {
+.sidebarItem {
     & > div {
         display: flex;
         align-items: center;

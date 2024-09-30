@@ -7,8 +7,8 @@
         margin-bottom: 1rem;
     }
 
-    & .input-field,
-    .select-field {
+    & .inputField,
+    .selectField {
         max-width: 250px;
         border-radius: 7px;
         padding: 10px;
@@ -27,11 +27,11 @@
     }
 }
 
-.input-field.invert-color {
+.inputField.invertColor {
     border: 1px solid #ccc;
     color: #212121;
 }
 
-.input-label.invert-color {
+.inputLabel.invertColor {
     color: #212121;
 }

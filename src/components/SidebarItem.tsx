@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './SidebarItem.css';
+import style from './SidebarItem.module.css';
 
 type SidebarItemProps = {
     id: number;
@@ -17,7 +17,7 @@ export const SidebarItem = ({
     quantity,
 }: SidebarItemProps) => {
     return (
-        <li className="sidebar-item">
+        <li className={style.sidebarItem}>
             <div>
                 <img width={50} src={image} alt={name} />
                 <strong>{name}</strong>

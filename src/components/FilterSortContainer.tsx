@@ -1,11 +1,11 @@
 import React, { ChangeEvent, useState } from 'react';
 import { Input, Select } from './Input';
-
-import './FilterSortContainer.css';
 import { useSearchParams } from 'react-router-dom';
 import { TCriteria, useBeerStore } from '../stores/beersStore';
 import closeIcon from '../assets/icons/close-icon.svg';
 import searchIcon from '../assets/icons/search-icon.svg';
+
+import style from './FilterSortContainer.module.css';
 
 const FilterSortContainer = () => {
     const [queries, setQueries] = useState<{
@@ -89,11 +89,11 @@ const FilterSortContainer = () => {
     };
 
     return (
-        <div className="filter-sort-container">
+        <div className={style.filterSortContainer}>
             <h3>Filter & Sort</h3>
             <form
                 onSubmit={onSubmitHander}
-                className="filter-sort-container-inputs"
+                className={style.filterSortContainerInputs}
             >
                 <Input
                     type="text"
@@ -115,16 +115,19 @@ const FilterSortContainer = () => {
                         { value: 'low-high', label: 'low-high price' },
                     ]}
                 />
-                <div className="filter-buttons">
+                <div className={style.filterButtons}>
                     <button
-                        className="filter-button"
+                        className={style.filterButton}
                         type="submit"
                         disabled={isLoading}
                     >
                         <img src={searchIcon} alt="search" />
                     </button>
                     <button
-                        className="filter-button filter-button--clear"
+                        className={[
+                            style.filterButton,
+                            style.filterButtonClear,
+                        ].join(' ')}
                         type="button"
                         onClick={onClearHandler}
                         disabled={
