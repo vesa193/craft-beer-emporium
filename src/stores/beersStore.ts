@@ -31,8 +31,8 @@ type TBeerState = {
         name,
         criteria,
     }: {
-        name: string;
-        criteria: TCriteria;
+        name?: string;
+        criteria?: TCriteria;
     }) => void;
     updateSoldBeers: (newBeer: TBeer) => void;
     filterBeersListbyQueryKey: (queryKey: string) => void;
@@ -72,6 +72,13 @@ export const useBeerStore = create<TBeerState>((set, get) => ({
 
             let beersList = await response.json();
             let filteredBeersList = [...beersList];
+            const beerId = window.location.href.split('/').pop();
+
+            if (beerId) {
+                set(() => ({
+                    singleBeer: findSingleBeerFromList([...beersList], +beerId),
+                }));
+            }
 
             if (name) {
                 filteredBeersList = filterBeersList(
@@ -86,7 +93,6 @@ export const useBeerStore = create<TBeerState>((set, get) => ({
                     criteria
                 );
             }
-            console.log('filteredBeersList', filteredBeersList);
 
             filteredBeersList = filteredBeersList.map((beer) => ({
                 ...beer,
@@ -147,10 +153,11 @@ export const useBeerStore = create<TBeerState>((set, get) => ({
         });
     },
     filterBeersListbyQueryKey: (queryKey: string) => {
-        if (queryKey === '' || queryKey === 'keyword') {
+        console.log('queryKey', queryKey, get().beersList);
+        if (queryKey === '' || queryKey === 'name') {
+            get().fetchBeersList({});
             set(() => ({
                 filteredBeersList: [],
-                beersList: get().beersList,
             }));
         }
 

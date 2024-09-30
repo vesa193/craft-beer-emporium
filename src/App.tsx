@@ -11,14 +11,14 @@ import style from './components/Sidebar.module.css';
 
 function App() {
     const { soldBeersList, fetchBeersList } = useBeerStore();
-    const [searchParams] = useSearchParams();
+    // const [searchParams] = useSearchParams();
 
-    useEffect(() => {
-        fetchBeersList({
-            name: searchParams.get('name') || '',
-            criteria: (searchParams.get('criteria') as TCriteria) || '',
-        });
-    }, []);
+    // useEffect(() => {
+    //     fetchBeersList({
+    //         name: searchParams.get('name') || '',
+    //         criteria: (searchParams.get('criteria') as TCriteria) || '',
+    //     });
+    // }, []);
 
     return (
         <>

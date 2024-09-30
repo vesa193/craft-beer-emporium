@@ -15,7 +15,7 @@ export const Navbar = () => {
 
     return (
         <header className={style.header}>
-            <Link to={!pathname.includes('/beers') ? '/beers' : pathname}>
+            <Link to={pathname !== '/beers' ? '/beers' : pathname}>
                 <img
                     className={style.headerLogo}
                     src={craftBeerEmporiumLogo}

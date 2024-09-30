@@ -25,7 +25,6 @@ const BeerDetailCard = ({ singleBeer }: BeerDetailCardProps) => {
     return (
         <>
             <div className={style.beerDetails}>
-                <h1>Beer Details</h1>
                 <img src={singleBeer?.image} alt={singleBeer.name} />
                 <div className={style.beerDetailsContent}>
                     <h3>{singleBeer?.name}</h3>

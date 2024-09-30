@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router';
 import { useBeerStore } from '../stores/beersStore';
 import BeerDetailCard from '../components/BeerDetailCard';
+import spinnerIcon from '../assets/icons/spinner-icon.svg';
+import style from '../components/Layout.module.css';
 
 const BeerDetails = () => {
     const { beerId } = useParams();
@@ -12,7 +14,13 @@ const BeerDetails = () => {
     }, [beerId]);
 
     if (isLoading) {
-        return <p>Loading...</p>;
+        return (
+            <img
+                className={style.loading}
+                src={spinnerIcon}
+                alt="spinner-icon"
+            />
+        );
     }
 
     if (error) {
