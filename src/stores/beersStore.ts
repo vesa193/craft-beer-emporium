@@ -39,6 +39,7 @@ type TBeerState = {
     sortBeersListbyQueryKey: (criteria: TCriteria) => void;
     findSingleBeer: (id: number) => void;
     filterTheMostPopularBeers: () => void;
+    addNewBeer: (newBeer: TBeer) => void;
 };
 
 export const useBeerStore = create<TBeerState>((set, get) => ({
@@ -136,57 +137,51 @@ export const useBeerStore = create<TBeerState>((set, get) => ({
         set(() => ({
             isLoading: true,
         }));
-        setTimeout(() => {
-            set((state) => ({
-                filteredBeersList: filterBeersList(
-                    [...state.beersList],
-                    queryKey
-                ),
-                isLoading: false,
-            }));
-        }, 1000);
+        set((state) => ({
+            filteredBeersList: filterBeersList([...state.beersList], queryKey),
+            isLoading: false,
+        }));
     },
     sortBeersListbyQueryKey: (criteria: TCriteria) => {
         set(() => ({
             isLoading: true,
         }));
-        setTimeout(() => {
-            set((state) => ({
-                filteredBeersList: sortBeersList(
-                    state.filteredBeersList.length > 0
-                        ? [...state.filteredBeersList]
-                        : [...state.beersList],
-                    criteria
-                ),
-                isLoading: false,
-            }));
-        }, 1000);
+        set((state) => ({
+            filteredBeersList: sortBeersList(
+                state.filteredBeersList.length > 0
+                    ? [...state.filteredBeersList]
+                    : [...state.beersList],
+                criteria
+            ),
+            isLoading: false,
+        }));
     },
     findSingleBeer: (id: number) => {
         set(() => ({
             isLoading: true,
         }));
-        setTimeout(() => {
-            set((state) => ({
-                singleBeer: findSingleBeerFromList([...state.beersList], id),
-                isLoading: false,
-                error: !state.singleBeer ? 'Beer not found' : '',
-            }));
-        }, 1000);
+        set((state) => ({
+            singleBeer: findSingleBeerFromList([...state.beersList], id),
+            isLoading: false,
+            error: !state.singleBeer ? 'Beer not found' : '',
+        }));
     },
     filterTheMostPopularBeers: () => {
-        setTimeout(() => {
-            set((state) => ({
-                popularBeersList: [...state.beersList]
-                    .sort((a, b) => b.rating.reviews - a.rating.reviews)
-                    .splice(0, 10)
-                    .map((beer) => ({
-                        id: beer.id,
-                        name: beer.name.slice(0, 10) + '...',
-                        average: beer.rating.average,
-                        reviews: beer.rating.reviews,
-                    })),
-            }));
-        }, 1000);
+        set((state) => ({
+            popularBeersList: [...state.beersList]
+                .sort((a, b) => b.rating.reviews - a.rating.reviews)
+                .splice(0, 10)
+                .map((beer) => ({
+                    id: beer.id,
+                    name: beer.name,
+                    average: beer.rating.average,
+                    reviews: beer.rating.reviews,
+                })),
+        }));
+    },
+    addNewBeer: (newBeer: TBeer) => {
+        set((state) => ({
+            beersList: [...state.beersList, newBeer],
+        }));
     },
 }));
