@@ -119,7 +119,9 @@ const FilterSortContainer = () => {
                     <button
                         className={style.filterButton}
                         type="submit"
-                        disabled={isLoading}
+                        disabled={
+                            isLoading || (!queries.name && !queries.criteria)
+                        }
                     >
                         <img src={searchIcon} alt="search" />
                     </button>

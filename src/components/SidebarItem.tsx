@@ -32,8 +32,8 @@ export const SidebarItem = ({
                 <img width={50} src={image} alt={name} />
                 <strong>{name}</strong>
             </div>
-
-            <p>{`${price} - x${quantity}`}</p>
+            <br />
+            <i>{`${price} - x${quantity}`}</i>
         </li>
     );
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TBeer } from '../types/types';
 
 import style from './BeerDetailCard.module.css';
@@ -7,17 +7,20 @@ import { useBeerStore } from '../stores/beersStore';
 
 type BeerDetailCardProps = {
     singleBeer: TBeer;
-    isOpen: boolean;
-    onBuyHandler: (beerId: number) => void;
 };
 
-const BeerDetailCard = ({
-    singleBeer,
-    isOpen,
-    onBuyHandler,
-}: BeerDetailCardProps) => {
-    const { soldBeersList } = useBeerStore();
+const BeerDetailCard = ({ singleBeer }: BeerDetailCardProps) => {
+    const { soldBeersList, beersList, updateSoldBeers } = useBeerStore();
+    const [isOpen, setIsOpen] = useState(false);
     const lastSoldBeer = soldBeersList[soldBeersList?.length - 1];
+
+    const onBuyHandler = (beerId: number) => {
+        const soldBeer = beersList.find((beer) => beer.id === beerId);
+        if (soldBeer) {
+            setIsOpen(true);
+            updateSoldBeers(soldBeer);
+        }
+    };
 
     return (
         <>
@@ -38,6 +41,8 @@ const BeerDetailCard = ({
             </div>
             {isOpen && (
                 <Dialog
+                    isOpen={isOpen}
+                    onClose={() => setIsOpen(false)}
                     header={lastSoldBeer.name}
                     image={
                         <img src={lastSoldBeer.image} alt={lastSoldBeer.name} />

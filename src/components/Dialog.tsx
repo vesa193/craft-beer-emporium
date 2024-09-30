@@ -1,33 +1,37 @@
 import React from 'react';
-import { useDialogStore } from '../stores/dialogStore';
 import { createPortal } from 'react-dom';
 
-import './Dialog.css';
+import style from './Dialog.module.css';
 
 type DialogProps = {
     header: string;
     body: string | JSX.Element;
     image: JSX.Element;
+    isOpen: boolean;
+    onClose: () => void;
 };
 
-const Dialog = ({ header, body, image }: DialogProps) => {
-    const { onClose, isOpen } = useDialogStore((state) => state);
+const Dialog = ({ header, body, image, isOpen, onClose }: DialogProps) => {
+    const onCloseHandler = () => {
+        onClose();
+    };
+
     return (
         isOpen &&
         createPortal(
-            <div className="dialog-wrapper">
-                <div className="dialog-backdrop"></div>
-                <div className="dialog">
-                    <div className="dialog-header">
-                        {image && image}
+            <div>
+                <div className={style.dialogBackdrop}></div>
+                <div className={style.dialog}>
+                    <div className={style.dialogHeader}>
+                        {image ? image : null}
                         <h4>{header}</h4>
                     </div>
-                    <div className="dialog-body">{body}</div>
-                    <div className="dialog-footer">
-                        <button type="button" onClick={onClose}>
+                    <div className={style.dialogBody}>{body}</div>
+                    <div className={style.dialogFooter}>
+                        <button type="button" onClick={onCloseHandler}>
                             OK
                         </button>
-                        <button type="button" onClick={onClose}>
+                        <button type="button" onClick={onCloseHandler}>
                             Close
                         </button>
                     </div>

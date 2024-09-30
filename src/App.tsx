@@ -7,6 +7,7 @@ import { TCriteria, useBeerStore } from './stores/beersStore';
 import { SidebarItem } from './components/SidebarItem';
 import { countTotal } from './utils/format';
 import { useSearchParams } from 'react-router-dom';
+import style from './components/Sidebar.module.css';
 
 function App() {
     const { soldBeersList, fetchBeersList } = useBeerStore();
@@ -26,7 +27,7 @@ function App() {
                 <>
                     <>{soldBeersList?.length < 1 && <p>No items</p>}</>
                     {soldBeersList?.length > 0 && (
-                        <ul className="sidebar-items">
+                        <ul className={style.sidebarItems}>
                             {soldBeersList?.map((soldBeer) => {
                                 return (
                                     <SidebarItem
@@ -37,7 +38,7 @@ function App() {
                             })}
                         </ul>
                     )}
-                    <p className="sidebar-total">
+                    <p className={style.sidebarTotal}>
                         Total:{' '}
                         <strong>{`$${countTotal(soldBeersList).toFixed(2)}`}</strong>
                     </p>

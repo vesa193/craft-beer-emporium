@@ -2,26 +2,10 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router';
 import { useBeerStore } from '../stores/beersStore';
 import BeerDetailCard from '../components/BeerDetailCard';
-import { useDialogStore } from '../stores/dialogStore';
 
 const BeerDetails = () => {
     const { beerId } = useParams();
-    const {
-        singleBeer,
-        findSingleBeer,
-        isLoading,
-        updateSoldBeers,
-        beersList,
-        error,
-    } = useBeerStore();
-    const { isOpen, onOpen } = useDialogStore();
-    const onBuyHandler = (beerId: number) => {
-        const soldBeer = beersList.find((beer) => beer.id === beerId);
-        if (soldBeer) {
-            updateSoldBeers(soldBeer);
-            onOpen();
-        }
-    };
+    const { singleBeer, findSingleBeer, isLoading, error } = useBeerStore();
 
     useEffect(() => {
         findSingleBeer(Number(beerId));
@@ -36,13 +20,7 @@ const BeerDetails = () => {
     }
 
     if (singleBeer) {
-        return (
-            <BeerDetailCard
-                singleBeer={singleBeer}
-                isOpen={isOpen}
-                onBuyHandler={onBuyHandler}
-            />
-        );
+        return <BeerDetailCard singleBeer={singleBeer} />;
     }
 };
 

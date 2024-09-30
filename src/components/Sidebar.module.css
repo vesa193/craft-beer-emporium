@@ -33,6 +33,9 @@
     }
 
     & .sidebarItems {
+        display: grid;
+        grid-template-rows: repeat(auto-fit, minmax(130px, 150px));
+        gap: 1rem;
         overflow-y: auto;
     }
 
