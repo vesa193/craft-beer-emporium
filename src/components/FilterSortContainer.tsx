@@ -126,6 +126,7 @@ const FilterSortContainer = () => {
                         <img src={searchIcon} alt="search" />
                     </button>
                     <button
+                        data-testid="clear-button"
                         className={[
                             style.filterButton,
                             style.filterButtonClear,

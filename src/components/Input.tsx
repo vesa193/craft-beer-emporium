@@ -19,7 +19,7 @@ type TOption = {
     label: string;
 };
 
-type SelectProps = {
+export type SelectProps = {
     value: string;
     onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
     options: TOption[];
