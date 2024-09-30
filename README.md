@@ -5,7 +5,7 @@ The app contains filter and sort on the intial screen for faster research.
 Shopping cart, where user can add (buy) items.
 Item details view and Managament view with showing chart details and option to add new item.
 
-## How to run the application
+### How to run the application
 
 -   Before all, you should install all packages and dependencies of the project:
 
@@ -22,3 +22,13 @@ Item details view and Managament view with showing chart details and option to a
 App will be rised on this link:
 
 [App localhost](http://localhost:5173)
+
+### Coverage
+
+All tests should be running via command below:
+
+```bash
+    npm run test
+```
+
+Script will run all files, that contains `.test` extension, and check for bugs.
