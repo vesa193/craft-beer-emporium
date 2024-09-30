@@ -1,7 +1,7 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
 import { useSidebarStore } from '../stores/sidebarStore';
-import closeIcon from '../../public/icons/close-icon.svg';
+import closeIcon from '../assets/icons/close-icon.svg';
 
 import './Sidebar.css';
 type SidebarProps = {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import craftBeerEmporiumLogo from '../../public/craft-beer-emporium.jpg';
-import cartIcon from '../../public/icons/cart-icon.png';
+import craftBeerEmporiumLogo from '../assets/craft-beer-emporium.jpg';
+import cartIcon from '../assets/icons/cart-icon.png';
 import './Navbar.css';
 import { useBeerStore } from '../stores/beersStore';
 import { useSidebarStore } from '../stores/sidebarStore';

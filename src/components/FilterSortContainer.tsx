@@ -4,8 +4,8 @@ import { Input, Select } from './Input';
 import './FilterSortContainer.css';
 import { useSearchParams } from 'react-router-dom';
 import { TCriteria, useBeerStore } from '../stores/beersStore';
-import closeIcon from '../../public/icons/close-icon.svg';
-import searchIcon from '../../public/icons/search-icon.svg';
+import closeIcon from '../assets/icons/close-icon.svg';
+import searchIcon from '../assets/icons/search-icon.svg';
 
 const FilterSortContainer = () => {
     const [queries, setQueries] = useState<{
