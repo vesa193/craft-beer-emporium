@@ -3,6 +3,7 @@ import { TBeer } from '../types/types';
 
 import style from './BeerDetailCard.module.css';
 import Dialog from './Dialog';
+import { useBeerStore } from '../stores/beersStore';
 
 type BeerDetailCardProps = {
     singleBeer: TBeer;
@@ -15,6 +16,9 @@ const BeerDetailCard = ({
     isOpen,
     onBuyHandler,
 }: BeerDetailCardProps) => {
+    const { soldBeersList } = useBeerStore();
+    const lastSoldBeer = soldBeersList[soldBeersList?.length - 1];
+
     return (
         <>
             <div className={style.beerDetails}>
@@ -34,11 +38,16 @@ const BeerDetailCard = ({
             </div>
             {isOpen && (
                 <Dialog
-                    header={singleBeer.name}
-                    image={<img src={singleBeer.image} alt={singleBeer.name} />}
+                    header={lastSoldBeer.name}
+                    image={
+                        <img src={lastSoldBeer.image} alt={lastSoldBeer.name} />
+                    }
                     body={
                         <div className="dialog-body">
-                            <p>{singleBeer.price}</p>
+                            <p>
+                                {lastSoldBeer.price}{' '}
+                                {`x${lastSoldBeer.quantity}`}
+                            </p>
                         </div>
                     }
                 />

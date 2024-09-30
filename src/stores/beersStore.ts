@@ -70,7 +70,7 @@ export const useBeerStore = create<TBeerState>((set, get) => ({
                 }));
             }
 
-            const beersList = await response.json();
+            let beersList = await response.json();
             let filteredBeersList = [...beersList];
 
             if (name) {
@@ -88,6 +88,11 @@ export const useBeerStore = create<TBeerState>((set, get) => ({
             }
             console.log('filteredBeersList', filteredBeersList);
 
+            filteredBeersList = filteredBeersList.map((beer) => ({
+                ...beer,
+                quantity: 0,
+            }));
+
             if (filteredBeersList.length === 0) {
                 set(() => ({
                     filteredBeersList: [],
@@ -96,6 +101,11 @@ export const useBeerStore = create<TBeerState>((set, get) => ({
                 }));
                 return;
             }
+
+            beersList = beersList.map((beer: TBeer) => ({
+                ...beer,
+                quantity: 0,
+            }));
 
             set(() => ({
                 beersList,

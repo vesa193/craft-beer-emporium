@@ -15,7 +15,6 @@ const BeerDetails = () => {
         error,
     } = useBeerStore();
     const { isOpen, onOpen } = useDialogStore();
-
     const onBuyHandler = (beerId: number) => {
         const soldBeer = beersList.find((beer) => beer.id === beerId);
         if (soldBeer) {
